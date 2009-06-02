@@ -13,10 +13,5 @@ void startgame(void)
 		printf("# "); //prompt (get user info)
 		fgets(cmdRaw, MAX_CHAR-1, stdin);
 		cmdList = g_strsplit(cmdRaw, " ", -1);
-
-        int i;
-        for (i=0; cmdList[i]; i++) {
-            printf("|%s", cmdList[i]);
-        }
     }
 }

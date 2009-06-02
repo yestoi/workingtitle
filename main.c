@@ -1,9 +1,7 @@
 #include "game.h"
 #include <stdlib.h>
 
-/* TODO: Choose version control
- * TODO: Game Design and Planing
- */
+// * TODO: Game Design and Planing
 
 int showmenu(void);
 void loadconsole(void);

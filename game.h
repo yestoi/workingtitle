@@ -7,6 +7,6 @@
 #define MAX_CHAR 100 //max input
 
 void startgame(void);
-int ParseCommand(char cmdArray[], int arg);
+int ParseCommand(char **cmdArray, int arg);
 
 #endif

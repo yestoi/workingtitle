@@ -16,11 +16,11 @@ void startgame(void)
             arg = i;
         }
 
-        ParseCommand(cmdList, arg);
+        ParseCommand(*cmdList, arg);
     }
 }
 
-int ParseCommand(char *cmdArray, int arg)
+int ParseCommand(char cmdArray[], int arg)
 {
     enum CMD
     {
@@ -32,17 +32,19 @@ int ParseCommand(char *cmdArray, int arg)
         clear, //clear screen (require ncurses)
     } command;
 
-    GData dl = g_datalist_init(); //Use a datalist to hide endless if/elseif
-    g_datalist_set_data(dl, "cd", 0);
-    g_datalist_set_data(dl, "ls", 1);
-    g_datalist_set_data(dl, "rm", 2);
-    g_datalist_set_data(dl, "touch", 3);
-    g_datalist_set_data(dl, "pwd", 4);
-    g_datalist_set_data(dl, "clear", 5);
+    GData *dl;
+    g_datalist_init(&dl); 
+    g_datalist_set_data(&dl, "cd", (gpointer) 0);
+    g_datalist_set_data(&dl, "ls", (gpointer) 1);
+    g_datalist_set_data(&dl, "rm", (gpointer) 2);
+    g_datalist_set_data(&dl, "touch", (gpointer) 3);
+    g_datalist_set_data(&dl, "pwd", (gpointer) 4);
+    g_datalist_set_data(&dl, "clear", (gpointer) 5);
     
     if (arg < 1) return 0; //Don't bother with no args
     
-    command = g_datalist_get_data(dl, cmdArray[0]);
+    command = cd; 
+    g_datalist_get_data(&dl, cmdArray[0]);
 
     switch (command)
     {

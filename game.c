@@ -11,10 +11,8 @@ void startgame(void)
 		printf("# "); //prompt (get user info)
 		fgets(cmdRaw, MAX_CHAR-1, stdin);
 		cmdList = g_strsplit(cmdRaw, " ", -1);
-        if (cmdList == NULL) { printf("NULL\n"); }
-
         int i, arg;
-        for (i = 0; cmdList[i] != NULL; ++i) {
+        for (i=0;cmdList[i] != NULL;++i){
             arg = i;
         }
 
@@ -43,7 +41,12 @@ int ParseCommand(char **cmdArray ,int arg)
     g_datalist_set_data(&dl, "pwd", (gpointer) 4);
     g_datalist_set_data(&dl, "clear", (gpointer) 5);
     
-    command = (int) (g_datalist_get_data(&dl, cmdArray[0]));
+    if (arg < 1) return 0; //Don't bother with no args
+    
+    command = cd; 
+    if (g_datalist_get_data(&dl, cmdArray[0])) {
+        printf("true\n");
+    }
 
     switch (command)
     {

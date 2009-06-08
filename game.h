@@ -3,6 +3,7 @@
 
 #include <glib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_CHAR 100 //max input
 

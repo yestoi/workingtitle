@@ -31,7 +31,7 @@ void startgame(void)
 		cmdList = g_strsplit(cmdRaw, " ", -1);
 
         int i, arg;
-        for (i=0;cmdList[i] != NULL;++i){
+        for (i=0;cmdList[i] != NULL;++i) {
             arg = i;
         }
 

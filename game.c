@@ -1,10 +1,25 @@
 #include "game.h"
 
+/* TODO: Setup directory structure
+ * TODO: Setup enviroment
+ */
+
 void startgame(void)
 {
-	
 	char cmdRaw[MAX_CHAR]; //input
 	char **cmdList; //tokenized string
+
+    //Cmd lookup structure
+	GData *dl;
+    g_datalist_init(&dl); 
+    g_datalist_set_data(&dl, "cd", (gpointer) 1);
+    g_datalist_set_data(&dl, "ls", (gpointer) 2);
+    g_datalist_set_data(&dl, "rm", (gpointer) 3);
+    g_datalist_set_data(&dl, "touch", (gpointer) 4);
+    g_datalist_set_data(&dl, "pwd", (gpointer) 5);
+    g_datalist_set_data(&dl, "clear", (gpointer) 6);
+    g_datalist_set_data(&dl, "exit", (gpointer) 7);
+
 
 	while (1)
 	{
@@ -20,35 +35,14 @@ void startgame(void)
             arg = i;
         }
 
-        ParseCommand(cmdList, arg);
+        ParseCommand(cmdList, arg, dl);
     }
 }
 
-int ParseCommand(char **cmdArray ,int arg)
+int ParseCommand(char **cmdArray ,int arg, GData *dl)
 {
 
-    enum CMD
-    {
-        cd=1, //Change Directory
-        ls, //List Directory
-        rm, //Remove file/directory
-        touch, //create file
-        pwd, //Print Working Directory
-        clear, //clear screen (require ncurses)
-        _exit,
-    } command;
-
-    GData *dl;
-    g_datalist_init(&dl); 
-    g_datalist_set_data(&dl, "cd", (gpointer) 1);
-    g_datalist_set_data(&dl, "ls", (gpointer) 2);
-    g_datalist_set_data(&dl, "rm", (gpointer) 3);
-    g_datalist_set_data(&dl, "touch", (gpointer) 4);
-    g_datalist_set_data(&dl, "pwd", (gpointer) 5);
-    g_datalist_set_data(&dl, "clear", (gpointer) 6);
-    g_datalist_set_data(&dl, "exit", (gpointer) 7);
-    
-    command = (int) g_datalist_get_data(&dl, cmdArray[0]);
+    enum CMD command = (int) g_datalist_get_data(&dl, cmdArray[0]);
 
     switch (command)
     {

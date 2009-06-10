@@ -8,7 +8,7 @@
 #define MAX_CHAR 100 //max input
 
 void startgame(void);
-int ParseCommand(char **cmdArray, int arg, GData *dl);
+int ParseCommand(char **cmdArray, int arg, GData *dl, GNode *filesystem);
 
 enum CMD
 {

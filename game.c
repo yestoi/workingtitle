@@ -20,10 +20,20 @@ void startgame(void)
     g_datalist_set_data(&dl, "clear", (gpointer) 6);
     g_datalist_set_data(&dl, "exit", (gpointer) 7);
 
+    GNode *root = g_node_new("root");
+    g_node_append_data(root, "home");
+    g_node_append_data(root, "etc");
+    g_node_append_data(root, "lib");
+    g_node_append_data(root, "proc");
+    g_node_append_data(root, "bin");
+    g_node_append_data(root, "dev");
+    g_node_append_data(root, "usr");
+    g_node_append_data(root, "var");
 
 	while (1)
 	{
 		printf("# "); //prompt (get user info)
+
 		fgets(cmdRaw, MAX_CHAR-1, stdin);
         if (cmdRaw[0] == '\n') continue; //Empty, discard
         g_strchomp(cmdRaw);
@@ -35,11 +45,11 @@ void startgame(void)
             arg = i;
         }
 
-        ParseCommand(cmdList, arg, dl);
+        ParseCommand(cmdList, arg, dl, root);
     }
 }
 
-int ParseCommand(char **cmdArray ,int arg, GData *dl)
+int ParseCommand(char **cmdArray ,int arg, GData *dl, GNode *filesystem)
 {
 
     enum CMD command = (int) g_datalist_get_data(&dl, cmdArray[0]);
@@ -51,7 +61,7 @@ int ParseCommand(char **cmdArray ,int arg, GData *dl)
             break;
         
         case ls:
-            printf("list directory\n");
+            g_node_traverse(filesystem, G_IN_ORDER, G_TRAVERSE_ALL, -1, printdir, );
             break;
 
         case rm:
@@ -71,6 +81,7 @@ int ParseCommand(char **cmdArray ,int arg, GData *dl)
             break;
 
         case _exit: //gcc thinks I'm calling a function..
+            g_data_destroy(dl);
             exit(EXIT_SUCCESS); //cleanup code
 
         default:

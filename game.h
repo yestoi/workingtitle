@@ -9,6 +9,7 @@
 
 void startgame(void);
 int ParseCommand(char **cmdArray, int arg, GData *dl, GNode *filesystem);
+gboolean printdir_func(GNode *node, gpointer data);
 
 enum CMD
 {

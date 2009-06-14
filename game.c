@@ -61,7 +61,7 @@ int ParseCommand(char **cmdArray ,int arg, GData *dl, GNode *filesystem)
             break;
         
         case ls:
-            g_node_traverse(filesystem, G_IN_ORDER, G_TRAVERSE_ALL, -1, printdir, );
+            g_node_traverse(filesystem, G_IN_ORDER, G_TRAVERSE_ALL, -1, printdir_func, NULL);
             break;
 
         case rm:
@@ -81,7 +81,7 @@ int ParseCommand(char **cmdArray ,int arg, GData *dl, GNode *filesystem)
             break;
 
         case _exit: //gcc thinks I'm calling a function..
-            g_data_destroy(dl);
+            g_free(filesystem);
             exit(EXIT_SUCCESS); //cleanup code
 
         default:
@@ -91,3 +91,9 @@ int ParseCommand(char **cmdArray ,int arg, GData *dl, GNode *filesystem)
     return 0;
 }
 
+gboolean printdir_func(GNode *node, gpointer data)
+{
+    if (node->data == NULL) { return TRUE; }
+    printf("%s\n", (char *)node->data);
+    return FALSE;
+}
